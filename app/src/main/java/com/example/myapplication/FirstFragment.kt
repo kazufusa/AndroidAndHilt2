@@ -39,11 +39,18 @@ class FirstFragment : Fragment() {
             view.findViewById<TextView>(R.id.text1).text = "Count: " + it.toString()
         })
 
+        viewModel.clockLiveData.observe(viewLifecycleOwner, Observer {
+            view.findViewById<TextView>(R.id.text2).text = it
+        })
+
         view.findViewById<Button>(R.id.button1).setOnClickListener {
             viewModel.increment()
         }
         view.findViewById<Button>(R.id.button2).setOnClickListener {
             viewModel.decrement()
+        }
+        view.findViewById<Button>(R.id.button3).setOnClickListener {
+            viewModel.getCurrentTime()
         }
     }
 }
