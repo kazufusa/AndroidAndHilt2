@@ -1,13 +1,14 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,8 +20,8 @@ class SecondFragment : Fragment() {
     private val viewModel by activityViewModels<MyViewModel>()
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false)
@@ -32,6 +33,10 @@ class SecondFragment : Fragment() {
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
-        Log.println(Log.INFO, "ViewModelTest@SecondFragment",viewModel.count.toString()) // printout 1
+
+        view.findViewById<TextView>(R.id.textview_second).text = "Count: " + viewModel.count.toString()
+        viewModel.countLiveData.observe(viewLifecycleOwner, Observer {
+            view.findViewById<TextView>(R.id.textview_second).text = "Count: " + it.toString()
+        })
     }
 }
