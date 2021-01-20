@@ -18,7 +18,7 @@ class MyViewModel @ViewModelInject constructor(
     fun getCurrentTime() {
         viewModelScope.launch {
             val response = service.getClock()
-            response?.body()?.st?.let {
+            response?.body()?.UnixTimeStamp?.let {
                 val t = java.time.Instant.ofEpochMilli((it*1000).toLong())
                     .atZone(ZoneId.of("Asia/Tokyo"))
                 clockLiveData.postValue(t.toString())

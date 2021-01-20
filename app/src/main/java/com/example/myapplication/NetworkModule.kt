@@ -10,12 +10,13 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ApplicationComponent::class)
 object NetworkModule {
-    private const val URL = "https://ntp-a1.nict.go.jp/"
+    private const val URL = "https://showcase.api.linx.twenty57.net/"
 
     @Provides
     @Singleton
@@ -37,6 +38,8 @@ object NetworkModule {
     fun provideOkHttp(): OkHttpClient =
         OkHttpClient
             .Builder()
+            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
