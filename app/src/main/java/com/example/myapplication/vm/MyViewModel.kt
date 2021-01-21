@@ -1,10 +1,10 @@
-package com.example.myapplication
+package com.example.myapplication.vm
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.api.ClockService
 import kotlinx.coroutines.launch
 import java.time.ZoneId
 
