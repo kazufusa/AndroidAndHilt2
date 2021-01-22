@@ -1,6 +1,7 @@
 package com.example.myapplication.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.vm.MyViewModel
 import com.example.myapplication.R
+import com.example.myapplication.repo.handleResource
+import com.example.myapplication.vm.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.ZoneId
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -41,18 +44,27 @@ class FirstFragment : Fragment() {
             view.findViewById<TextView>(R.id.text1).text = "Count: " + it.toString()
         })
 
-        viewModel.clockLiveData.observe(viewLifecycleOwner, Observer {
-            view.findViewById<TextView>(R.id.text2).text = it
-        })
-
         view.findViewById<Button>(R.id.button1).setOnClickListener {
             viewModel.increment()
         }
         view.findViewById<Button>(R.id.button2).setOnClickListener {
             viewModel.decrement()
         }
+
         view.findViewById<Button>(R.id.button3).setOnClickListener {
-            viewModel.getCurrentTime()
+            viewModel.getCurrentTime().observe(viewLifecycleOwner, Observer { resource ->
+                Log.i("FirstFragment", "1")
+                handleResource(resource,
+                    onLoading = {
+                        view.findViewById<TextView>(R.id.text2).text = "..loading"
+                    },
+                    onError = { msg, _ ->
+                        view.findViewById<TextView>(R.id.text2).text = msg
+                    },
+                    onSuccess = {
+                        view.findViewById<TextView>(R.id.text2).text = it.toString()
+                    })
+            })
         }
     }
 }
