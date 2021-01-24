@@ -1,12 +1,17 @@
 package com.example.myapplication.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.myapplication.api.ClockService
+import com.example.myapplication.db.AppDatabase
+import com.example.myapplication.db.CountDao
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -65,4 +70,12 @@ object NetworkModule {
     @Singleton
     fun provideClockService(retrofit: Retrofit): ClockService =
         retrofit.create(ClockService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCountDao(@ApplicationContext appContext: Context): CountDao =
+        Room
+            .databaseBuilder( appContext, AppDatabase::class.java, "AppDatabase" )
+            .build()
+            .countDao()
 }
