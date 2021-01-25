@@ -39,7 +39,6 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        view.findViewById<TextView>(R.id.text1).text = "Count: " + viewModel.count.toString()
         viewModel.countLiveData.observe(viewLifecycleOwner, Observer {
             view.findViewById<TextView>(R.id.text1).text = "Count: " + it.toString()
         })
@@ -56,13 +55,16 @@ class FirstFragment : Fragment() {
                 Log.i("FirstFragment", "1")
                 handleResource(resource,
                     onLoading = {
+                        view.findViewById<Button>(R.id.button3).isEnabled = false
                         view.findViewById<TextView>(R.id.text2).text = "..loading"
                     },
                     onError = { msg, _ ->
                         view.findViewById<TextView>(R.id.text2).text = msg
+                        view.findViewById<Button>(R.id.button3).isEnabled = true
                     },
                     onSuccess = {
                         view.findViewById<TextView>(R.id.text2).text = it.toString()
+                        view.findViewById<Button>(R.id.button3).isEnabled = true
                     })
             })
         }

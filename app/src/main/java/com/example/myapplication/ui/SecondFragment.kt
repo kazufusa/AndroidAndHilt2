@@ -57,8 +57,6 @@ class SecondFragment : Fragment() {
             dispatchTakePictureIntent()
         }
 
-        view.findViewById<TextView>(R.id.textview_second).text =
-            "Count: " + viewModel.count.toString()
         viewModel.countLiveData.observe(viewLifecycleOwner, Observer {
             view.findViewById<TextView>(R.id.textview_second).text = "Count: " + it.toString()
         })
