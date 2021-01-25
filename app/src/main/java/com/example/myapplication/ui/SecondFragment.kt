@@ -12,16 +12,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.myapplication.vm.MyViewModel
 import com.example.myapplication.R
+import com.example.myapplication.databinding.FragmentSecondBinding
+import com.example.myapplication.vm.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileInputStream
@@ -36,29 +34,36 @@ import java.util.*
 @AndroidEntryPoint
 class SecondFragment : Fragment() {
     private val viewModel by activityViewModels<MyViewModel>()
+    private var _binding: FragmentSecondBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.button_second).setOnClickListener {
+        binding.buttonSecond.setOnClickListener {
             // dispatchTakePictureIntent()
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
-        view.findViewById<Button>(R.id.button2_2).setOnClickListener {
+        binding.button22.setOnClickListener {
             dispatchTakePictureIntent()
         }
 
         viewModel.countLiveData.observe(viewLifecycleOwner, Observer {
-            view.findViewById<TextView>(R.id.textview_second).text = "Count: " + it.toString()
+            binding.textviewSecond.text = "Count: " + it.toString()
         })
     }
 
@@ -128,7 +133,7 @@ class SecondFragment : Fragment() {
             val inputStream = FileInputStream(File(currentPhotoPath))
             val bitmap = BitmapFactory.decodeStream(inputStream)
 
-            view?.findViewById<ImageView>(R.id.imageView)?.setImageBitmap(bitmap)
+            binding.imageView.setImageBitmap(bitmap)
         }
     }
 }

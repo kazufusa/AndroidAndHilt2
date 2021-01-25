@@ -12,3 +12,4 @@
 9. [ ] Test ViewModel and LiveData
     - https://developer.android.com/codelabs/advanced-android-kotlin-training-testing-basics#7
     - https://developer.android.com/codelabs/advanced-android-kotlin-training-testing-basics#8
+10. [x] ViewBinding
