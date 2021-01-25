@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentFirstBinding
-import com.example.myapplication.repo.handleResource
+import com.example.myapplication.util.handleResource
 import com.example.myapplication.vm.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
