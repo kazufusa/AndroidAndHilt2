@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.myapplication.repo.ApiRepository
 import com.example.myapplication.repo.CountRepository
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MyViewModel @ViewModelInject constructor(
     private val apiRepo: ApiRepository,
@@ -21,6 +22,8 @@ class MyViewModel @ViewModelInject constructor(
     }
 
     fun getCurrentTime() = apiRepo.getClock()
+
+    fun postPhoto(file: File) = apiRepo.postImage(file)
 
     fun increment() {
         viewModelScope.launch {

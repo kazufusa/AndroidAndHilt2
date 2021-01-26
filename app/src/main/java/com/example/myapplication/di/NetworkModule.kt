@@ -22,7 +22,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(ApplicationComponent::class)
 object NetworkModule {
-    private const val URL = "https://showcase.api.linx.twenty57.net/"
+    private const val URL = "http://192.168.11.24:8080"
 
     @Provides
     @Singleton

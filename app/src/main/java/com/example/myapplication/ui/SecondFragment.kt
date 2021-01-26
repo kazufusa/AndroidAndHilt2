@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentSecondBinding
+import com.example.myapplication.util.handleResource
 import com.example.myapplication.vm.MyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -130,10 +131,27 @@ class SecondFragment : Fragment() {
                 put("_data", currentPhotoPath)
             }
 
-            val inputStream = FileInputStream(File(currentPhotoPath))
+            val file = File(currentPhotoPath)
+            val inputStream = FileInputStream(file)
             val bitmap = BitmapFactory.decodeStream(inputStream)
 
             binding.imageView.setImageBitmap(bitmap)
+
+            Log.i("SecondFragment", "Try to Send Photo")
+            viewModel.postPhoto(file).observe(viewLifecycleOwner, Observer { resource ->
+                handleResource(resource,
+                    onLoading = {
+                        binding.button22.isEnabled = false
+                    },
+                    onError = { msg, _ ->
+                        msg?.let { Log.i("SecondFragment", it) }
+                        binding.button22.isEnabled = true
+                    },
+                    onSuccess = {
+                        Log.i("SecondFragment", "Succeeded to Send Photo")
+                        binding.button22.isEnabled = true
+                    })
+            })
         }
     }
 }
