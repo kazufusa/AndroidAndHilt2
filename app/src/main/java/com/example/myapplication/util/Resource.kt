@@ -38,6 +38,7 @@ fun <T> handleResource(
         Status.LOADING -> onLoading(res.data)
         Status.SUCCESS -> onSuccess(res.data)
         Status.ERROR -> onError(res.message, res.data)
-        else -> {}
+        else -> {
+        }
     }
 }

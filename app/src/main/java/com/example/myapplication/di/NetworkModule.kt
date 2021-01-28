@@ -75,7 +75,7 @@ object NetworkModule {
     @Singleton
     fun provideCountDao(@ApplicationContext appContext: Context): CountDao =
         Room
-            .databaseBuilder( appContext, AppDatabase::class.java, "AppDatabase" )
+            .databaseBuilder(appContext, AppDatabase::class.java, "AppDatabase")
             .build()
             .countDao()
 }
