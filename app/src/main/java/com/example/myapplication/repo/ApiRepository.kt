@@ -20,7 +20,7 @@ class ApiRepository @Inject constructor(
 ) {
     fun getClock(): LiveData<Resource<ZonedDateTime>> {
         return execute {
-            service.getClock().UnixTimeStamp.let {
+            service.getClock("TEST_TOKEN").UnixTimeStamp.let {
                 java.time.Instant.ofEpochMilli((it * 1000).toLong())
                     .atZone(ZoneId.of("Asia/Tokyo"))
             }
