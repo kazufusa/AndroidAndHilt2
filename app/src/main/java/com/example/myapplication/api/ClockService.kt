@@ -1,6 +1,7 @@
 package com.example.myapplication.api
 
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ClockService {
@@ -11,7 +12,13 @@ interface ClockService {
     @Multipart
     suspend fun postPhoto(
         @Part("name") name: String,
-        @Part() imageData: MultipartBody.Part
+        @Part imageData: MultipartBody.Part
+    ): UploadResponse
+
+    @POST("upload")
+    @Multipart
+    suspend fun postPhoto2(
+        @PartMap params: MutableMap<String, RequestBody>
     ): UploadResponse
 }
 
