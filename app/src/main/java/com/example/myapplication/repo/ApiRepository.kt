@@ -32,7 +32,7 @@ class ApiRepository @Inject constructor(
     fun postImage(file: File): LiveData<Resource<Boolean>> {
         return execute {
             service.postPhoto(
-                file.name,
+                file.name.toRequestBody(),
                 MultipartBody.Part.createFormData(
                     "file", file.name,
                     file.asRequestBody(file.extension.toMediaTypeOrNull())
